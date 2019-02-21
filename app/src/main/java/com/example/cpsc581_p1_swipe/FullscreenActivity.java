@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -16,15 +17,19 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import io.codetail.widget.RevealFrameLayout;
 import io.uuddlrlrba.closepixelate.Pixelate;
 import io.uuddlrlrba.closepixelate.PixelateLayer;
 
@@ -42,10 +47,17 @@ public class FullscreenActivity extends AppCompatActivity {
     private final Handler mHideHandler = new Handler();
     private View mContentView;
 
-    private static final String TAG = "SWIPE: "; // used for debugging
-    private ImageView mImageView; // single image on on screen
-    private Button mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3;
-    final Random random = new Random(); // used for randomness
+    private static final String TAG = "SWIPE: ";                                // log debugging
+    private String str;                                                         // for random image name
+    private ImageView mImageView;                                               // single image on on screen
+    private Button mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3; // buttons
+    final Random random = new Random();                                         // used for randomness
+
+    private String[] backText = {"TRY AGAIN", "NOPE", "SORRY", "WHO DIS"};
+    private String[] backColour = {"#f2c25a", "#405ca3", "#fe8f2f", "#4c725e"};
+    private String[] backTextColour = {"#775bd0", "#fade51", "#36aade", "#85231d"};
+    private TextView mText;
+    private RevealFrameLayout mBackground;
 
     private Bitmap currentBitmap = null;
     private Handler mImageHandler = new Handler();
@@ -89,6 +101,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
         // SYSTEM UI
         mContentView = findViewById(R.id.fullscreen_content);
+        mBackground = findViewById(R.id.fullscreen_content_background);
+        mText = findViewById(R.id.fullscreen_content);
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +116,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.imgRandom);
 
 
-        // For permission to access phone and get random image from gallery
+        // For permission to access phone and get random image from gallery //
         /*if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -114,36 +128,15 @@ public class FullscreenActivity extends AppCompatActivity {
             setRandomImageFromGallery();
         }*/
 
-
-        // For getting random image from resources
+        // For getting random image from resources //
         // IMPORTANT: Change according to number of images being used; name images as "img_#.jpg"
-        final String str = "img_" + random.nextInt(8);
-
-        Log.d(TAG, str);
+        //str = "img_" + random.nextInt(8);
         // From resource mipmap folder; instead of drawable due to size of photos
         //mImageView.setImageDrawable(getResources().getDrawable(getResourceID(str, "mipmap", getApplicationContext())));
 
         // Works to pixelate image from assets folder
         // https://github.com/bmaslakov/android-close-pixelate
-        try {
-            mImageView.setImageBitmap(Pixelate.fromAsset(
-                    getAssets(), str+".jpg",
-                    new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
-                            .setResolution(48)
-                            .setSize(50)
-                            .build(),
-                    new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
-                            .setResolution(48)
-                            .setOffset(24)
-                            .build(),
-                    new PixelateLayer.Builder(PixelateLayer.Shape.Circle)
-                            .setResolution(8)
-                            .setSize(6)
-                            .build()));
-        } catch (IOException e) {
-            Log.d(TAG, "Pixelating image IOException: "+e);
-        }
-
+        setRandomBackgroundImage(mImageView);
 
         // RANDOM BUTTON LOCATION
         mCorrectButton = findViewById(R.id.correct_button);
@@ -168,31 +161,89 @@ public class FullscreenActivity extends AppCompatActivity {
         mDummyButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(getIntent());
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3);
             }
         });
 
         mDummyButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(getIntent());
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3);
             }
         });
 
         mDummyButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(getIntent());
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3);
             }
         });
 
-        /*Intent restartIntent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(restartIntent);*/
+    }
 
+
+    // IMAGE STUFF //
+
+    private void imageViewAnimatedChange(Context c, final ImageView v) {
+        final Animation anim_out = AnimationUtils.loadAnimation(c, android.R.anim.fade_out);
+        final Animation anim_in  = AnimationUtils.loadAnimation(c, android.R.anim.fade_in);
+        anim_out.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override public void onAnimationStart(Animation animation) {}
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation)
+            {
+                setRandomBackgroundImage(v);
+
+                anim_in.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {}
+                    @Override public void onAnimationRepeat(Animation animation) {}
+                    @Override public void onAnimationEnd(Animation animation) {}
+                });
+                v.startAnimation(anim_in);
+            }
+        });
+        v.startAnimation(anim_out);
+    }
+
+
+    private void setRandomBackgroundImage(ImageView mImageView) {
+        str = "img_" + random.nextInt(9);
+        Log.d(TAG, str);
+        try {
+            mImageView.setImageBitmap(Pixelate.fromAsset(
+                    getAssets(), str+".jpg",
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
+                            .setResolution(48)
+                            .setSize(50)
+                            .build(),
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
+                            .setResolution(48)
+                            .setOffset(24)
+                            .build(),
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Circle)
+                            .setResolution(8)
+                            .setSize(6)
+                            .build()));
+        } catch (IOException e) {
+            Log.d(TAG, "Pixelating image IOException: "+e);
+        }
+
+    }
+
+    // BUTTON STUFF //
+
+    private void setButtons(Button mCorrectButton, Button mDummyButton1, Button mDummyButton2, Button mDummyButton3) {
+        buttonAnimatedChange(mCorrectButton);
+        buttonAnimatedChange(mDummyButton1);
+        buttonAnimatedChange(mDummyButton2);
+        buttonAnimatedChange(mDummyButton3);
     }
 
     private void randomButtonLocation(Button button) {
@@ -201,34 +252,44 @@ public class FullscreenActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        params.leftMargin = button.getWidth()
-                + new Random().nextInt(metrics.widthPixels - 2*button.getWidth());
-        params.topMargin = button.getHeight()
-                + new Random().nextInt(metrics.heightPixels - 3*button.getHeight());
-        button.setLayoutParams(params);
-
+        params.leftMargin = button.getWidth() + random.nextInt((metrics.widthPixels - 100));
+        params.topMargin = button.getHeight() + random.nextInt((metrics.heightPixels - 300));
         button.setLayoutParams(params);
     }
 
+    private void buttonAnimatedChange(final Button b) {
+        final Animation anim_out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
+        final Animation anim_in  = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        anim_out.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override public void onAnimationStart(Animation animation) {}
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation)
+            {
+                randomButtonLocation(b);
 
-    /**
-     * Get random image from resources folder
-     *
-     * @param resName
-     * @param resType
-     * @param ctx
-     * @return
-     */
-    protected final static int getResourceID(final String resName, final String resType, final Context ctx) {
-        final int ResourceID = ctx.getResources().getIdentifier(resName, resType, ctx.getApplicationInfo().packageName);
-
-        if (ResourceID == 0) {
-            throw new IllegalArgumentException("No resource string found with name " + resName);
-        } else {
-            return ResourceID;
-        }
+                anim_in.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {}
+                    @Override public void onAnimationRepeat(Animation animation) {}
+                    @Override public void onAnimationEnd(Animation animation) {}
+                });
+                b.startAnimation(anim_in);
+            }
+        });
+        b.startAnimation(anim_out);
     }
 
+    // FULL SCREEN STUFF //
+
+    private void changeFullscreenBack() {
+        int colourPosition = random.nextInt(4);
+        int textPosition = random.nextInt(4);
+        Log.d(TAG, "Color: "+colourPosition);
+        Log.d(TAG, "Text: "+textPosition);
+        mText.setText(backText[textPosition]);
+        mText.setTextColor(Color.parseColor(backTextColour[colourPosition]));
+        mBackground.setBackgroundColor(Color.parseColor(backColour[colourPosition]));
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -237,7 +298,7 @@ public class FullscreenActivity extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(100);
+        delayedHide(50);
     }
 
     private void toggle() {
@@ -281,15 +342,25 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
 
+    //////////////////////////////////
+    // EVERYTHING BELOW IS NOT USED //
+    //////////////////////////////////
+
+
+    // FOR RANDOM IMAGE FROM RESOURCE MIPMAP FOLDER
+
+    protected final static int getResourceID(final String resName, final String resType, final Context ctx) {
+        final int ResourceID = ctx.getResources().getIdentifier(resName, resType, ctx.getApplicationInfo().packageName);
+
+        if (ResourceID == 0) {
+            throw new IllegalArgumentException("No resource string found with name " + resName);
+        } else {
+            return ResourceID;
+        }
+    }
+
     // FOR RANDOM IMAGE FROM PHONE GALLERY;
 
-    /**
-     * For getting permissions
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -306,9 +377,6 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Get random image from phones gallery
-     */
     private void setRandomImageFromGallery() {
         String[] projection = new String[]{
                 MediaStore.Images.Media.DATA,
