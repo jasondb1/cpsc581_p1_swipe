@@ -3,6 +3,7 @@ package com.example.cpsc581_p1_swipe;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import io.codetail.widget.RevealFrameLayout;
 import io.uuddlrlrba.closepixelate.Pixelate;
@@ -50,7 +53,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final String TAG = "SWIPE: ";                                // log debugging
     private String str;                                                         // for random image name
     private ImageView mImageView;                                               // single image on on screen
-    private Button mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3; // buttons
+    private Button mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3,
+            mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9,
+            mDummyButton10;
     final Random random = new Random();                                         // used for randomness
 
     private String[] backText = {"TRY AGAIN", "NOPE", "SORRY", "WHO DIS"};
@@ -143,18 +148,60 @@ public class FullscreenActivity extends AppCompatActivity {
         mDummyButton1 = findViewById(R.id.dummy_button1);
         mDummyButton2 = findViewById(R.id.dummy_button2);
         mDummyButton3 = findViewById(R.id.dummy_button3);
+        mDummyButton4 = findViewById(R.id.dummy_button4);
+        mDummyButton5 = findViewById(R.id.dummy_button5);
+        mDummyButton6 = findViewById(R.id.dummy_button6);
+        mDummyButton7 = findViewById(R.id.dummy_button7);
+        mDummyButton8 = findViewById(R.id.dummy_button8);
+        mDummyButton9 = findViewById(R.id.dummy_button9);
+        mDummyButton10 = findViewById(R.id.dummy_button10);
 
         randomButtonLocation(mCorrectButton);
         randomButtonLocation(mDummyButton1);
         randomButtonLocation(mDummyButton2);
         randomButtonLocation(mDummyButton3);
+        randomButtonLocation(mDummyButton4);
+        randomButtonLocation(mDummyButton5);
+        randomButtonLocation(mDummyButton6);
+        randomButtonLocation(mDummyButton7);
+        randomButtonLocation(mDummyButton8);
+        randomButtonLocation(mDummyButton9);
+        randomButtonLocation(mDummyButton10);
 
         mCorrectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
+                mText.setText("WELCOME");
+                mText.setTextColor(getResources().getColor(android.R.color.black));
+                mBackground.setBackgroundColor(getResources().getColor(android.R.color.white));
+
+                final Animation anim_out = AnimationUtils.loadAnimation(FullscreenActivity.this, android.R.anim.fade_out);
+                anim_out.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                      public void onAnimationStart(Animation animation) {}
+
+                      @Override
+                      public void onAnimationRepeat(Animation animation) {}
+
+                      @Override
+                      public void onAnimationEnd(Animation animation) {
+                          moveTaskToBack(true);
+                          android.os.Process.killProcess(android.os.Process.myPid());
+                          System.exit(0);
+                      }
+                  });
+                mCorrectButton.startAnimation(anim_out);
+                mDummyButton1.startAnimation(anim_out);
+                mDummyButton2.startAnimation(anim_out);
+                mDummyButton3.startAnimation(anim_out);
+                mDummyButton4.startAnimation(anim_out);
+                mDummyButton5.startAnimation(anim_out);
+                mDummyButton6.startAnimation(anim_out);
+                mDummyButton7.startAnimation(anim_out);
+                mDummyButton8.startAnimation(anim_out);
+                mDummyButton9.startAnimation(anim_out);
+                mDummyButton10.startAnimation(anim_out);
+                mImageView.startAnimation(anim_out);
             }
         });
 
@@ -163,7 +210,7 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeFullscreenBack();
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
             }
         });
 
@@ -172,7 +219,7 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeFullscreenBack();
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
             }
         });
 
@@ -181,10 +228,72 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeFullscreenBack();
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
             }
         });
 
+        mDummyButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
+
+        mDummyButton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
+
+        mDummyButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
+
+        mDummyButton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
+
+        mDummyButton8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
+
+        mDummyButton9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
+
+        mDummyButton10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+            }
+        });
     }
 
 
@@ -220,16 +329,16 @@ public class FullscreenActivity extends AppCompatActivity {
             mImageView.setImageBitmap(Pixelate.fromAsset(
                     getAssets(), str+".jpg",
                     new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
-                            .setResolution(48)
-                            .setSize(50)
+                            .setResolution(24)
+                            .setSize(36)
                             .build(),
                     new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
-                            .setResolution(48)
-                            .setOffset(24)
+                            .setResolution(24)
+                            .setOffset(12)
                             .build(),
-                    new PixelateLayer.Builder(PixelateLayer.Shape.Circle)
-                            .setResolution(8)
-                            .setSize(6)
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Square)
+                            .setResolution(24)
+                            .setAlpha(0.6f)
                             .build()));
         } catch (IOException e) {
             Log.d(TAG, "Pixelating image IOException: "+e);
@@ -239,11 +348,18 @@ public class FullscreenActivity extends AppCompatActivity {
 
     // BUTTON STUFF //
 
-    private void setButtons(Button mCorrectButton, Button mDummyButton1, Button mDummyButton2, Button mDummyButton3) {
+    private void setButtons(Button mCorrectButton, Button mDummyButton1, Button mDummyButton2, Button mDummyButton3, Button mDummyButton4, Button mDummyButton5, Button mDummyButton6, Button mDummyButton7, Button mDummyButton8, Button mDummyButton9, Button mDummyButton10) {
         buttonAnimatedChange(mCorrectButton);
         buttonAnimatedChange(mDummyButton1);
         buttonAnimatedChange(mDummyButton2);
         buttonAnimatedChange(mDummyButton3);
+        buttonAnimatedChange(mDummyButton4);
+        buttonAnimatedChange(mDummyButton5);
+        buttonAnimatedChange(mDummyButton6);
+        buttonAnimatedChange(mDummyButton7);
+        buttonAnimatedChange(mDummyButton8);
+        buttonAnimatedChange(mDummyButton9);
+        buttonAnimatedChange(mDummyButton10);
     }
 
     private void randomButtonLocation(Button button) {

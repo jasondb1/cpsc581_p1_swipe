@@ -40,38 +40,134 @@
             android:id="@+id/correct_button"
             android:layout_width="100px"
             android:layout_height="235px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/waldo_walking" />
-            <!--android:text="@string/correct_button" />-->
-
+            android:background="@drawable/waldo_lean_wave"/>
 
         <Button
             android:id="@+id/dummy_button1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_x="100px"
-            android:layout_y="102px"
-            android:background="@drawable/waldo_half_wave" />
-            <!--android:text="@string/dummy_button" />-->
+            android:layout_width="100px"
+            android:layout_height="304px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/joy"/>
 
         <Button
             android:id="@+id/dummy_button2"
             android:layout_width="100px"
-            android:layout_height="196px"
+            android:layout_height="169px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/waldo_lean_wave"/>
-            <!--android:text="@string/dummy_button" />-->
+            android:background="@drawable/sadness"/>
 
         <Button
             android:id="@+id/dummy_button3"
             android:layout_width="100px"
-            android:layout_height="118px"
+            android:layout_height="141px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/waldo_face"/>
-            <!--android:text="@string/dummy_button" />-->
+            android:background="@drawable/anger"/>
+
+        <Button
+            android:id="@+id/dummy_button4"
+            android:layout_width="100px"
+            android:layout_height="200px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/disgust"/>
+
+        <Button
+            android:id="@+id/dummy_button5"
+            android:layout_width="100px"
+            android:layout_height="388px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/fear"/>
+
+        <Button
+            android:id="@+id/dummy_button6"
+            android:layout_width="100px"
+            android:layout_height="207px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/dash"/>
+
+        <Button
+            android:id="@+id/dummy_button7"
+            android:layout_width="100px"
+            android:layout_height="249px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/elastigirl"/>
+
+        <Button
+            android:id="@+id/dummy_button8"
+            android:layout_width="100px"
+            android:layout_height="142px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/jackjack" />
+
+        <Button
+            android:id="@+id/dummy_button9"
+            android:layout_width="100px"
+            android:layout_height="242px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/mr_incredible" />
+
+        <Button
+            android:id="@+id/dummy_button10"
+            android:layout_width="100px"
+            android:layout_height="294px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/violet" />
+
 
     </RelativeLayout>
 
