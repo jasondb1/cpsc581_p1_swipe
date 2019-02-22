@@ -32,12 +32,12 @@
         android:scaleType="centerCrop"/>
         <!--android:layout_centerInParent="true" -->
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/correct_button"
+            android:id="@+id/correct_button1"
             android:layout_width="100px"
             android:layout_height="235px"
             android:layout_marginStart="8dp"
@@ -46,7 +46,48 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/waldo_lean_wave"/>
+            android:background="@drawable/waldo_lean_wave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.054" />
+
+        <Button
+            android:id="@+id/correct_button2"
+            android:layout_width="100px"
+            android:layout_height="235px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/waldo_walking"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.887"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.262" />
+
+        <Button
+            android:id="@+id/correct_button3"
+            android:layout_width="100px"
+            android:layout_height="102px"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:background="@drawable/waldo_half_wave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/dummy_button1"
@@ -58,7 +99,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/joy"/>
+            android:background="@drawable/joy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.781"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.833" />
 
         <Button
             android:id="@+id/dummy_button2"
@@ -70,7 +117,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/sadness"/>
+            android:background="@drawable/sadness"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.106"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499" />
 
         <Button
             android:id="@+id/dummy_button3"
@@ -82,7 +135,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/anger"/>
+            android:background="@drawable/anger"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.851"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.075" />
 
         <Button
             android:id="@+id/dummy_button4"
@@ -94,7 +153,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/disgust"/>
+            android:background="@drawable/disgust"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.295" />
 
         <Button
             android:id="@+id/dummy_button5"
@@ -106,7 +171,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/fear"/>
+            android:background="@drawable/fear"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.451" />
 
         <Button
             android:id="@+id/dummy_button6"
@@ -118,7 +189,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/dash"/>
+            android:background="@drawable/dash"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.826"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.511" />
 
         <Button
             android:id="@+id/dummy_button7"
@@ -130,7 +207,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/elastigirl"/>
+            android:background="@drawable/elastigirl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.904" />
 
         <Button
             android:id="@+id/dummy_button8"
@@ -142,7 +225,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/jackjack" />
+            android:background="@drawable/jackjack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.372"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.145" />
 
         <Button
             android:id="@+id/dummy_button9"
@@ -154,7 +243,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/mr_incredible" />
+            android:background="@drawable/mr_incredible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.93" />
 
         <Button
             android:id="@+id/dummy_button10"
@@ -166,42 +261,13 @@
             android:layout_marginBottom="8dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:background="@drawable/violet" />
-
-
-    </RelativeLayout>
-
-
-
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <!--
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-
-
-        </LinearLayout>
-    </FrameLayout>
-    -->
+            android:background="@drawable/violet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.212"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.744" />
+    </android.support.constraint.ConstraintLayout>
 
 </io.codetail.widget.RevealFrameLayout>
