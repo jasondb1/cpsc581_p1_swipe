@@ -1,5 +1,6 @@
 package com.example.cpsc581_p1_swipe;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
@@ -10,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.appolica.flubber.Flubber;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +57,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private ImageView mImageView;                                               // single image on on screen
     private Button mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
             mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9,
-            mDummyButton10;
+            mDummyButton10, mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15,
+            mDummyButton16;
     final Random random = new Random();                                         // used for randomness
     private boolean waldo1=false, waldo2=false, waldo3=false;
 
@@ -128,14 +134,8 @@ public class FullscreenActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         } else {
-            setRandomImageFromGallery();
+            setRandomImageFromGallery(mImageView);
         }*/
-
-        // For getting random image from resources //
-        // IMPORTANT: Change according to number of images being used; name images as "img_#.jpg"
-        //str = "img_" + random.nextInt(8);
-        // From resource mipmap folder; instead of drawable due to size of photos
-        //mImageView.setImageDrawable(getResources().getDrawable(getResourceID(str, "mipmap", getApplicationContext())));
 
         // Works to pixelate image from assets folder
         // https://github.com/bmaslakov/android-close-pixelate
@@ -155,6 +155,12 @@ public class FullscreenActivity extends AppCompatActivity {
         mDummyButton8 = findViewById(R.id.dummy_button8);
         mDummyButton9 = findViewById(R.id.dummy_button9);
         mDummyButton10 = findViewById(R.id.dummy_button10);
+        mDummyButton11 = findViewById(R.id.dummy_button11);
+        mDummyButton12 = findViewById(R.id.dummy_button12);
+        mDummyButton13 = findViewById(R.id.dummy_button13);
+        mDummyButton14 = findViewById(R.id.dummy_button14);
+        mDummyButton15 = findViewById(R.id.dummy_button15);
+        mDummyButton16 = findViewById(R.id.dummy_button16);
 
         /*randomButtonLocation(mCorrectButton1);
         randomButtonLocation(mDummyButton1);
@@ -173,9 +179,6 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 waldo1 = true;
                 singleWaldoFoundAnimation(mCorrectButton1);
-                if(waldo2 && waldo3) {
-                    allWaldoFound();
-                }
             }
         });
 
@@ -184,9 +187,6 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 waldo2 = true;
                 singleWaldoFoundAnimation(mCorrectButton2);
-                if(waldo1 && waldo3) {
-                    allWaldoFound();
-                }
             }
         });
 
@@ -195,9 +195,6 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 waldo3 = true;
                 singleWaldoFoundAnimation(mCorrectButton3);
-                if(waldo1 && waldo2) {
-                    allWaldoFound();
-                }
             }
         });
 
@@ -205,8 +202,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -217,8 +217,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -229,8 +232,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -241,8 +247,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -253,8 +262,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -265,8 +277,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -277,8 +292,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -289,8 +307,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -301,8 +322,11 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -313,8 +337,101 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeFullscreenBack();
+                wrongButtonAnimation(v);
                 imageViewAnimatedChange(FullscreenActivity.this, mImageView);
-                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3, mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
+                waldo1=false;
+                waldo2=false;
+                waldo3=false;
+            }
+        });
+
+        mDummyButton11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                wrongButtonAnimation(v);
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
+                waldo1=false;
+                waldo2=false;
+                waldo3=false;
+            }
+        });
+
+        mDummyButton12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                wrongButtonAnimation(v);
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
+                waldo1=false;
+                waldo2=false;
+                waldo3=false;
+            }
+        });
+
+        mDummyButton13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                wrongButtonAnimation(v);
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
+                waldo1=false;
+                waldo2=false;
+                waldo3=false;
+            }
+        });
+
+        mDummyButton14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                wrongButtonAnimation(v);
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
+                waldo1=false;
+                waldo2=false;
+                waldo3=false;
+            }
+        });
+
+        mDummyButton15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                wrongButtonAnimation(v);
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
+                waldo1=false;
+                waldo2=false;
+                waldo3=false;
+            }
+        });
+
+        mDummyButton16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFullscreenBack();
+                wrongButtonAnimation(v);
+                imageViewAnimatedChange(FullscreenActivity.this, mImageView);
+                setButtons(mCorrectButton1, mCorrectButton2, mCorrectButton3, mDummyButton1, mDummyButton2, mDummyButton3,
+                        mDummyButton4, mDummyButton5, mDummyButton6, mDummyButton7, mDummyButton8, mDummyButton9, mDummyButton10,
+                        mDummyButton11, mDummyButton12, mDummyButton13, mDummyButton14, mDummyButton15, mDummyButton16);
                 waldo1=false;
                 waldo2=false;
                 waldo3=false;
@@ -333,6 +450,9 @@ public class FullscreenActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                if (waldo1 && waldo2 && waldo3) {
+                    allWaldoFound();
+                }
             }
         });
         b.startAnimation(shake);
@@ -371,6 +491,12 @@ public class FullscreenActivity extends AppCompatActivity {
         mDummyButton8.startAnimation(anim_out);
         mDummyButton9.startAnimation(anim_out);
         mDummyButton10.startAnimation(anim_out);
+        mDummyButton11.startAnimation(anim_out);
+        mDummyButton12.startAnimation(anim_out);
+        mDummyButton13.startAnimation(anim_out);
+        mDummyButton14.startAnimation(anim_out);
+        mDummyButton15.startAnimation(anim_out);
+        mDummyButton16.startAnimation(anim_out);
         mImageView.startAnimation(anim_out);
     }
 
@@ -387,6 +513,8 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override public void onAnimationEnd(Animation animation)
             {
                 setRandomBackgroundImage(v);
+                // for image from phone gallery
+                //setRandomImageFromGallery(v);
 
                 anim_in.setAnimationListener(new Animation.AnimationListener() {
                     @Override public void onAnimationStart(Animation animation) {}
@@ -401,18 +529,22 @@ public class FullscreenActivity extends AppCompatActivity {
 
 
     private void setRandomBackgroundImage(ImageView mImageView) {
-        str = "img_" + random.nextInt(9);
+        str = "img_" + random.nextInt(10);
         Log.d(TAG, str);
         try {
             mImageView.setImageBitmap(Pixelate.fromAsset(
                     getAssets(), str+".jpg",
-                    new PixelateLayer.Builder(PixelateLayer.Shape.Circle)
-                            .setResolution(24)
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Square)
+                            .setResolution(48)
                             .build(),
-                    new PixelateLayer.Builder(PixelateLayer.Shape.Circle)
-                            .setResolution(24)
-                            .setSize(9)
-                            .setOffset(12)
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
+                            .setResolution(12)
+                            .setSize(8)
+                            .build(),
+                    new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
+                            .setResolution(12)
+                            .setSize(8)
+                            .setOffset(6)
                             .build()));
         } catch (IOException e) {
             Log.d(TAG, "Pixelating image IOException: "+e);
@@ -422,7 +554,10 @@ public class FullscreenActivity extends AppCompatActivity {
 
     // BUTTON STUFF //
 
-    private void setButtons(Button mCorrectButton1, Button mCorrectButton2, Button mCorrectButton3, Button mDummyButton1, Button mDummyButton2, Button mDummyButton3, Button mDummyButton4, Button mDummyButton5, Button mDummyButton6, Button mDummyButton7, Button mDummyButton8, Button mDummyButton9, Button mDummyButton10) {
+    private void setButtons(Button mCorrectButton1, Button mCorrectButton2, Button mCorrectButton3, Button mDummyButton1, Button mDummyButton2,
+                            Button mDummyButton3, Button mDummyButton4, Button mDummyButton5, Button mDummyButton6, Button mDummyButton7,
+                            Button mDummyButton8, Button mDummyButton9, Button mDummyButton10, Button mDummyButton11, Button mDummyButton12,
+                            Button mDummyButton13, Button mDummyButton14, Button mDummyButton15, Button mDummyButton16) {
         buttonAnimatedChange(mCorrectButton1);
         buttonAnimatedChange(mCorrectButton2);
         buttonAnimatedChange(mCorrectButton3);
@@ -436,6 +571,12 @@ public class FullscreenActivity extends AppCompatActivity {
         buttonAnimatedChange(mDummyButton8);
         buttonAnimatedChange(mDummyButton9);
         buttonAnimatedChange(mDummyButton10);
+        buttonAnimatedChange(mDummyButton11);
+        buttonAnimatedChange(mDummyButton12);
+        buttonAnimatedChange(mDummyButton13);
+        buttonAnimatedChange(mDummyButton14);
+        buttonAnimatedChange(mDummyButton15);
+        buttonAnimatedChange(mDummyButton16);
     }
 
     private void randomButtonLocation(Button button) {
@@ -469,6 +610,10 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
         b.startAnimation(anim_out);
+    }
+
+    private void wrongButtonAnimation(View v) {
+        Flubber.with().animation(Flubber.AnimationPreset.MORPH).repeatCount(1).duration(750).createFor(v).start();
     }
 
     // FULL SCREEN STUFF //
@@ -539,18 +684,6 @@ public class FullscreenActivity extends AppCompatActivity {
     //////////////////////////////////
 
 
-    // FOR RANDOM IMAGE FROM RESOURCE MIPMAP FOLDER
-
-    protected final static int getResourceID(final String resName, final String resType, final Context ctx) {
-        final int ResourceID = ctx.getResources().getIdentifier(resName, resType, ctx.getApplicationInfo().packageName);
-
-        if (ResourceID == 0) {
-            throw new IllegalArgumentException("No resource string found with name " + resName);
-        } else {
-            return ResourceID;
-        }
-    }
-
     // FOR RANDOM IMAGE FROM PHONE GALLERY;
 
     @Override
@@ -558,7 +691,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                setRandomImageFromGallery();
+                setRandomImageFromGallery(mImageView);
             } else {
                 // Permission Denied
                 Toast.makeText(FullscreenActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
@@ -569,7 +702,7 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
 
-    private void setRandomImageFromGallery() {
+    private void setRandomImageFromGallery(final ImageView v) {
         String[] projection = new String[]{
                 MediaStore.Images.Media.DATA,
         };
@@ -601,7 +734,18 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
 
                 currentBitmap = BitmapFactory.decodeFile(path);
-                mImageView.setImageBitmap(currentBitmap);
+                v.setImageBitmap(Pixelate.fromBitmap(currentBitmap, new PixelateLayer.Builder(PixelateLayer.Shape.Square)
+                                .setResolution(48)
+                                .build(),
+                        new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
+                                .setResolution(12)
+                                .setSize(8)
+                                .build(),
+                        new PixelateLayer.Builder(PixelateLayer.Shape.Diamond)
+                                .setResolution(12)
+                                .setSize(8)
+                                .setOffset(6)
+                                .build()));
             }
         });
     }
